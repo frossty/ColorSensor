@@ -28,7 +28,7 @@ String ledValue = "20"; //default value 20
 
 // Assign output variables to GPIO pins
 const int mixer = 14;
-const int led = 1;
+const int led = 0;
 
 // Current time
 unsigned long currentTime = millis();
@@ -58,12 +58,6 @@ int blueVal = 0;
 void setup() {
   Serial.begin(115200);
 
-  // Initialize the ISL29125 with simple configuration so it starts sampling
-  if (RGB_sensor.init())
-  {
-    Serial.println("Sensor Initialization Successful\n\r");
-  }
-  
   // Initialize the output variables as outputs
   pinMode(mixer, OUTPUT);
   pinMode(led, OUTPUT);
@@ -71,6 +65,12 @@ void setup() {
   digitalWrite(mixer, LOW);
   digitalWrite(led, LOW);
 
+  // Initialize the ISL29125 with simple configuration so it starts sampling
+  if (RGB_sensor.init())
+  {
+    Serial.println("Sensor Initialization Successful");
+  }
+  
   // Connect to Wi-Fi network with SSID and password
   Serial.print("Connecting to ");
   Serial.println(ssid);
@@ -204,7 +204,7 @@ void loop(){
             client.println("<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: left;}");
             client.println(".button { background-color: #195B6A; border: none; color: white; padding: 16px 20px;");
             client.println("text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}");
-            client.println("input[type=text] {width: 2%;padding: 20px 20px;display: inline-block;box-sizing: border-box");
+            client.println("input[type=text] {width: 3%;padding: 20px 20px;display: inline-block;box-sizing: border-box");
             client.println(".button2 {background-color: #77878A;}</style></head>");
             
             // Web Page Heading
@@ -247,7 +247,7 @@ void loop(){
             
             client.println("<script>");
             client.println("function goToLed(link,swi){var e=document.getElementById(\"ledValueId\").value;var t=\"/4/\"+swi+\"/\"+e;link.setAttribute(\"href\",t);link.click();return true};");
-            client.println("function setTestKitValues(sel) {\r\n var obj, dbParam, xmlhttp, myObj, x, txt = \"\";\r\n obj = { table: sel, limit: 20 };\r\n dbParam = JSON.stringify(obj);\r\n xmlhttp = new XMLHttpRequest();\r\n xmlhttp.onreadystatechange = function() {\r\n if (this.readyState == 4 && this.status == 200) {\r\n myObj = JSON.parse(this.responseText);\r\n txt += \"<table border='1'>\"\r\n for (i in myObj) {\r\n if(myObj[i].param == sel){\r\n txt += \"<tr>\"\r\n txt += \"<td>Test Kit: \" + myObj[i].param + \"</td>\";\r\n txt += \"<tr><td>Value</td><td>Red</td><td>Green</td><td>Blue</td><td>Color</td></tr>\";\r\n document.getElementById(\"ledValueId\").value = myObj[i].led;\r\n for (j in myObj[i].sample) {\r\n txt += \"<tr><td>\" + myObj[i].sample[j].value + \"</td><td>\" + myObj[i].sample[j].r + \"</td><td>\" + myObj[i].sample[j].g + \"</td><td>\" + myObj[i].sample[j].b + \"</td>\"\r\n txt += \"<td style='background-color:rgb(\"+myObj[i].sample[j].r+\",\"+myObj[i].sample[j].g+\",\"+myObj[i].sample[j].b+\"')></td></tr>\";\r\n }\r\n txt += \"</tr>\"\r\n }\r\n }\r\n txt += \"</table>\" \r\n document.getElementById(\"color_sample\").innerHTML = txt;\r\n }\r\n };\r\n xmlhttp.open(\"GET\", \"https://frossty.alwaysdata.net/apiSampleCard.json\", true);\r\n xmlhttp.setRequestHeader(\"Content-type\", \"application/x-www-form-urlencoded\");\r\n xmlhttp.send(\"x=\" + dbParam);\r\n}");
+            client.println("function setTestKitValues(sel) {\r\n var obj, dbParam, xmlhttp, myObj, x, txt = \"\";\r\n obj = { table: sel, limit: 20 };\r\n dbParam = JSON.stringify(obj);\r\n xmlhttp = new XMLHttpRequest();\r\n xmlhttp.onreadystatechange = function() {\r\n if (this.readyState == 4 && this.status == 200) {\r\n myObj = JSON.parse(this.responseText);\r\n txt += \"<table border='1'>\"\r\n for (i in myObj) {\r\n if(myObj[i].param == sel){\r\n txt += \"<tr>\"\r\n txt += \"<td>Test Kit: \" + myObj[i].name + \"</td>\";\r\n txt += \"<tr><td>Value</td><td>Red</td><td>Green</td><td>Blue</td><td>Color</td></tr>\";\r\n document.getElementById(\"ledValueId\").value = myObj[i].led;\r\n for (j in myObj[i].sample) {\r\n txt += \"<tr><td>\" + myObj[i].sample[j].value + \"</td><td>\" + myObj[i].sample[j].r + \"</td><td>\" + myObj[i].sample[j].g + \"</td><td>\" + myObj[i].sample[j].b + \"</td>\"\r\n txt += \"<td style='background-color:rgb(\"+myObj[i].sample[j].r+\",\"+myObj[i].sample[j].g+\",\"+myObj[i].sample[j].b+\"')></td></tr>\";\r\n }\r\n txt += \"</tr>\"\r\n }\r\n }\r\n txt += \"</table>\" \r\n document.getElementById(\"color_sample\").innerHTML = txt;\r\n }\r\n };\r\n xmlhttp.open(\"GET\", \"https://api.mocki.io/v1/86bada30\", true);\r\n xmlhttp.setRequestHeader(\"Content-type\", \"application/x-www-form-urlencoded\");\r\n xmlhttp.send(\"x=\" + dbParam);\r\n}");
             client.println("</script>");
             client.println("</body></html>");
             
