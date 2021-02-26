@@ -1,11 +1,7 @@
-DIY 3D printed Digital Color Analysis for Aquarium test tubes, this device can be used to check color in the test tube with the digital color 
-
-Sample Data for comparison for API test kit:
-
-Api Nirate card sample value #1
-00 253 247 65
-05 251 210 65 
-10 250 160 65 
+Api Nirate card sample
+00 253 247 99
+05 251 210 96 
+10 250 160 96 
 20 248 111 67
 40 242 50 50
 80 242 10 55
