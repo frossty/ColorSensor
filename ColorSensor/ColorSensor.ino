@@ -12,8 +12,8 @@
 #include "SparkFunISL29125.h"
 
 // Replace with your network credentials
-const char* ssid     = "Tomato96";
-const char* password = "Mango!321";
+const char* ssid     = "<Enter wifi SSID here>";
+const char* password = "<Enter wifi Pass here>";
 
 // Set web server port number to 80
 WiFiServer server(80);
